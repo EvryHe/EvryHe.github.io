@@ -1,2 +1,8 @@
-_cache
-_site
+.*
+!.gitignore
+!.gitmodules
+*~
+
+components/
+
+_site/

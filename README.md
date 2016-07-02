@@ -1,50 +1,68 @@
-Jekyll Clean Dark
-============
+## The "What ?" and the "Why ?"
 
-This theme was created on top of Jekyll Clean theme by Scotte, you can view the original version in action [on his blog](https://scotte.github.io).
+**Carte** is a simple Jekyll based documentation website for APIs. It is designed as a boilerplate to build your own documentation and is heavily inspired from [Swagger](http://swagger.wordnik.com/) and [I/O docs](http://www.mashery.com/product/io-docs). Fork it, add specifications for your APIs calls and customize the theme. <small>Go ahead, see if we care.</small>
 
-* Get it from [github](https://github.com/streetturtle/jekyll-clean-dark).
-* See the [live demo](http://pavelmakhov.com/jekyll-clean-dark).
-* See it [in action on my own blog](http://pavelmakhov.com).
+We built **Carte** because the existing options (Swagger and the likes) were trying to do too much and did not match our needs:
 
-This theme uses some parts of Twitter Bootstrap, which allows it to look nice on a mobile devices using a collapsable nav bar and hiding the
-sidebar.
+1. Most of our API calls are sending JSON objects, as opposed to a series of parameters,
+1. Being able to query the real API is nice, but running anything but `GET` calls can get tricky ("What do you mean I deleted my stuff? I was just trying out the API calls!"),
+1. Overall, setting up a separate server for what really requires a good static documentation seemed overkill.
 
-Optionally you can use:
+The real value of **Carte** is its structure for describing APIs, not its underlying technical stack (or lack-thereof). In a nutshell; **we built a static template for your API documentation, feel free to re-use it**.
 
- - [Disqus](http://disqus.com) as a comments system;
- - [Google Analytics](http://www.google.com/analytics/);
- - [Yandex Metrica](http://metrica.yandex.com);
- - Blog tags;
- - Share buttons.
+## Install
 
-All these features could be set up in `_config.yml`. Also you can have social icons which could lead to your social acounts. It uses font-awesome, so you can have any icon you want to any social profile. Out-of-the box it has: LinkedIn, GitHub, StackOverflow, LastFm, Instagram. And you can easily add more by adding new style in `theme.css` and setting it in `_config.yml`.
+It' Jekyll god dammit:
 
-Installation
-==
+1. Clone this repository on your local,
+1. [Install Jekyll](https://github.com/mojombo/jekyll/wiki/install),
+1. Go at the root of the repository and run ```jekyll serve --watch```,
+1. Go to http://localhost:4000,
+1. [Great success! High five!](http://www.youtube.com/watch?v=wWWyJwHQ-4E)
 
-If you dont't have your own blog you can clone this repository and put your articles in a `_posts` folder.
-If you already have your own blog then I think you can clone this repository and copy-paste content keeping your `_posts` folder.
+## How to...
 
-After you will have to set up your `_config.yml`
+### Adding a new API call
 
-License
-=======
+You can add a new API call by simply adding a new post in the `_posts` folder. Jekyll by default forces you to specify a date in the file path: it makes us sad pandas too, but you'll have to stick to this format. You can use dates to control the order in which API calls are displayed in the interface.
 
-The content of this theme is distributed and licensed under a
-[Creative Commons Attribution 4.0 License](https://creativecommons.org/licenses/by/4.0/legalcode)
+Each API call can define a few values in its YAML header:
 
-    This license lets others distribute, remix, tweak, and build upon your work,
-    even commercially, as long as they credit you for the original creation. This
-    is the most accommodating of licenses offered. Recommended for maximum
-    dissemination and use of licensed materials.
+Variable | Mandatory | Default | Description
+--- | --- | --- | ---
+``title`` | Y | - | A short description of what that calls does.
+``path`` | N | - | The URL for the API call, including potential parameters.
+``type`` | N | - | Set it to `PUT`, `GET`, `POST`, `DELETE` or nothing (for parts of your documentation that do not relate to an actual API call).
 
-In other words: you can do anything you want with this theme on any site, just please
-provide a link to the original theme on github.
+A typical header:
 
-This theme includes the following files which are the properties of their
-respective owners:
+```
+---
+path: '/stuff/:id'
+title: 'Delete a thing'
+type: 'DELETE'
 
-* js/bootstrap.min.js - [bootstrap](http://getbootstrap.com)
-* css/bootstrap.min.css - [bootstrap](http://getbootstrap.com)
-* js/jquery.min.js - [jquery](https://jquery.com)
+layout: nil
+---
+```
+
+We then describe the request and response (or whatever else you wish to talk about) in the body of our post. Check the placeholders present in the `_posts` folder to get an idea of what it can look like.
+
+### Grouping calls
+
+Adding a category to your YAML header will allows you to group methods in the navigation. It is particularly helpful as you start having a lot of methods and need to organize them. For example:
+
+```
+---
+category: Stuff
+path: '/stuff/:id'
+title: 'Delete a thing'
+type: 'DELETE'
+
+layout: nil
+---
+```
+
+### Edit the design
+
+The default UI is mostly described through the `css/style.css` file and a couple short jQuery scripts in the `/_layouts/default.html` layout. Hack it to oblivion.
